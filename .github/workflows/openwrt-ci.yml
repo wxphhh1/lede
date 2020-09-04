@@ -44,17 +44,11 @@ jobs:
           # ln -s /mnt/openwrt/staging_dir ./staging_dir
           df -h
           
-      - name: 自定义插件主题。
-        run: |
-          cd package
-          mkdir openwrt-packages
-          cd openwrt-packages
-          git clone https://github.com/kuoruan/luci-app-v2ray.git
-          
-          
+                       
      
       - name: Update feeds
         run: |
+          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
       - name: Generate configuration file
@@ -113,14 +107,14 @@ jobs:
           CONFIG_PACKAGE_luci-app-mwan3=y
           CONFIG_PACKAGE_luci-app-mwan3helper=y
           CONFIG_PACKAGE_luci-app-syncdial=y
-          CONFIG_PACKAGE_luci-app-v2ray=y
+          CONFIG_PACKAGE_luci-app-ssr-plus=y
           
           EOF
          
           # 取消编译默认插件:
           cat >> .config <<EOF
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set
-          # CONFIG_PACKAGE_luci-app-ddns is not set
+          
           # CONFIG_PACKAGE_luci-app-filetransfer is not set
           # CONFIG_PACKAGE_luci-app-nlbwmon is not set
           # CONFIG_PACKAGE_luci-app-wol is not set
